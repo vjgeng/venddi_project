@@ -8,6 +8,7 @@ public class MachineRefillSubscriber implements ISubscriber{
 	
 	private Machine[] machines;
 	private int remaining;
+	static int count = 0; 
 	
 	public MachineRefillSubscriber(Machine[] machines) {
 		this.machines=machines;
@@ -22,20 +23,20 @@ public class MachineRefillSubscriber implements ISubscriber{
 
 	public void handle(IEvent event) {
 		
-		int count = 0; 
+	
+		
+		System.out.println("Machine Id : " + event.machineId() + " Item remaining: " + this.remaining);
 		
 		if(count < 1) {
 	
-			if(remaining < 3) {
+			if(remaining > 3) {
 				
-				new LowStockWarningEvent().warningLowStockWarningEvent();
-				count++;
-			}
-			else { 
 				new StockLevelOkEvent().warningStockLevelOkEvent();
 				count++;
 			}
-		
+			
+			
+				
 		}
 	}
 

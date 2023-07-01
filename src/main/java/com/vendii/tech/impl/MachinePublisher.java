@@ -1,8 +1,6 @@
 package com.vendii.tech.impl;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import com.vendii.tech.inf.IEvent;
@@ -20,32 +18,31 @@ public class MachinePublisher implements IPublishSubscribeService {
 		
 		  for (Map.Entry<String,ISubscriber> entry : eventMaps.entrySet()) {
 
-			  if(entry.getValue() instanceof MachineSaleSubscriber) {
+			  if(entry.getKey().equals("sale")) {
+							 
+				   MachineSaleSubscriber saleMachine = (MachineSaleSubscriber)	entry.getValue();
 			  
-				  MachineSaleSubscriber saleMachine = (MachineSaleSubscriber)	entry.getValue();
-			  
-				  MachineSaleEvent sale = (MachineSaleEvent) event;
-			  
-				  saleMachine.handle(sale);
-			  
-				  System.out.println(saleMachine);
-			  
-				  System.out.println(entry.getKey());
+				   MachineSaleEvent machineSaleEvent = (MachineSaleEvent) event;
+				  
+				   saleMachine.handle(machineSaleEvent);
 			  
 			  }
 			  
+			  else if(entry.getKey().equals("refill")) { 
+				  
+				   MachineRefillSubscriber refillMachine = (MachineRefillSubscriber) entry.getValue();
+					
+				   MachineRefillEvent refill = (MachineRefillEvent) event;
+					 
+				   refillMachine.handle(refill);
+				
+			  }
 			  else { 
-				  
-				  MachineRefillSubscriber refillMachine = (MachineRefillSubscriber) entry.getValue();
-				  
-				  MachineRefillEvent refill = (MachineRefillEvent) event;
-				  
-				  refillMachine.handle(refill);
-				  
-				  System.out.println(refillMachine);
-				  
-				  System.out.println(entry.getKey());
+				  System.out.println("error");
 			  }
+			  
+			  eventMaps.clear();
+			  
 		  }
 		 
 		
@@ -54,12 +51,7 @@ public class MachinePublisher implements IPublishSubscribeService {
 
 	public void subscribe(String type, ISubscriber handler) {
 		
-		
-		
 		eventMaps.put(type, handler);
-		
-		
-		System.out.println(eventMaps.size());
 		
 	}
 

@@ -2,7 +2,7 @@ package com.vendii.tech.model;
 
 public class Machine {
 	
-	public int stockLevel=10;
+	public int stockLevel=0;
 	private String id;
 	
 	public Machine(String id) {

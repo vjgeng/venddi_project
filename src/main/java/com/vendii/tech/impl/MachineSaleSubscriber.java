@@ -9,6 +9,7 @@ public class MachineSaleSubscriber implements ISubscriber{
 
 	private Machine[] machines;
 	private int remaining;
+	static int count = 0; 
 	
 	public MachineSaleSubscriber(Machine[] machines) {
 		this.machines=machines;
@@ -16,14 +17,27 @@ public class MachineSaleSubscriber implements ISubscriber{
 
 	public void handle(MachineSaleEvent event) {
 		
+	
 		  this.remaining = this.machines[2].stockLevel -= event.getSoldQuantity();
 		  IEvent result = (IEvent) event;
 		  handle(result);
+		  
+
 	}
 
 	public void handle(IEvent event) {
-		 
-		System.out.println("remaining: " + this.remaining);
+		
+		System.out.println("Machine Id : " + event.machineId() + " Item remaining: " + this.remaining);
+		
+		if(count < 1) {
+			
+			if(remaining < 3) {
+				
+				new LowStockWarningEvent().warningLowStockWarningEvent();
+				count++;
+			}
+		
+		}
 		
 	}
 

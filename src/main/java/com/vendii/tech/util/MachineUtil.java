@@ -9,7 +9,7 @@ public class MachineUtil {
 	
 	public String randomMachine () {
 		
-		double random = Math.random() * 3;
+		double random = Math.random() * 6;
 		
 		int finalRandom = (int) random;
 		
@@ -18,7 +18,16 @@ public class MachineUtil {
 		  } else if (random < 2) {
 		    return "002";
 		  }
-		  return "003";
+		    else if (random < 3) {
+		    return "003";
+		  }
+		  else if (random < 4) {
+			    return "004";
+		  }
+		  else if (random < 5) {
+			    return "005";
+		   }
+		  return "006";
 	}
 	
 	public IEvent eventGenerator() {
@@ -29,8 +38,11 @@ public class MachineUtil {
 		    int saleQty = (int) Math.random() < 0.5 ? 1 : 2; 
 		    return new MachineSaleEvent(saleQty, randomMachine());
 		  } 
-		  	int refillQty = (int) Math.random() < 0.5 ? 3 : 5; // 3 or 5
+		else { 
+			int refillQty = (int) Math.random() < 0.5 ? 3 : 5; // 3 or 5
 		  	return new MachineRefillEvent(refillQty, randomMachine());
+		  	
+		}
 	}
 	
 	
